@@ -1,0 +1,63 @@
+extends ../layouts/default
+
+block main
+  h1= title
+  hr
+  script(type='text/javascript').
+     $(function(){
+      var availableTags = [#{arr}];
+      //{JSON.stringify(arr)};
+
+      $("#tags").autocomplete({
+      minLength: 0,
+      source: availableTags,
+      focus: function( event, ui ) {
+        $("#tags").val(ui.item.label);
+        return false;
+        },
+      select: function( event, ui ) {
+            $("#tags").val( ui.item.label);
+            $( "#tags1-id").val( ui.item.value );
+            return false;
+            }
+      });
+       $("#tags").data("ui-autocomplete")._renderItem = function(ul, item) {
+      return $( "<li >" )
+      .append( "<a>" + item.label + "</a>" )
+      .appendTo(ul);
+      };
+
+      });
+
+block content
+    - var action = '/messages'
+
+
+      form.form-horizontal(method="post", action=action, enctype="multipart/form-data")
+
+        input(type="hidden", name="_csrf", value="#{csrf_token}")
+
+        label(for='tags') To
+        input#tags.input-xlarge(type='text', class='form-control tm-input',value=message.userfrom.name, placeholder='Type person name', name='tags', size=150)
+
+        input#tags1-id(type='hidden', name="userto", value=message.userfrom._id)
+        input#tags1-idfrom(type='hidden', value=req.user.id, name="userfrom")
+
+        br
+
+          //.input-group
+        label(for='title') Subject
+        input#title.input-xlarge(type='text', class='form-control', name="title",value=message.title,size=150, placeholder='Enter the title')
+
+        br
+
+          //.input-group
+        label(for='desc') Message
+        textarea#desc(rows="3", class='form-control', name="body", value=message.body, placeholder='Enter the message description')=message.body
+
+        br
+        .form-actions
+          button.btn.btn-primary(type='submit') Send
+          &nbsp;
+          a.btn.btn-warning(href='/messages', title="cancel") Cancel
+

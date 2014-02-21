@@ -1,0 +1,28 @@
+
+header#head
+
+  .navbar.navbar-default(role='navigation')
+    .navbar-header
+        img(src= "https://s3.amazonaws.com/logicordia/logicordiafinal1.png", height="55" )
+        //a(class='navbar-brand', href='/') PS
+
+    .collabse.navbar-collapse.navbar-ex1-collapse
+        ul.nav.navbar-nav
+            //li(class=isActive('/articles/new') ? 'active' : '')
+                a(href="/articles/new", title="new article") New
+          ul.nav.navbar-nav.navbar-right
+            if (req.isAuthenticated())
+              li
+                a(href="/users/"+req.user.id, title="Profile") #{req.user.name}
+              li
+                a(href="/settings", title="settings") Settings  
+              li
+                a(href="/logout", title="logout") Logout
+            else
+              li
+                a(href="/login", title="Login") Login
+
+  //a(href="https://github.com/rture")
+    img(style="position: fixed; top: 0; right: 0; border: 0; z-index: 9999",
+      src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png",
+      alt="BETA")

@@ -1,0 +1,52 @@
+extends ../layouts/default
+
+block main
+    h1= title
+    a(href="/messages/new", type="button", class="btn btn-success") New Message
+
+
+block content
+    br
+
+    ul(class="nav nav-tabs", name="mytab", id="mytab")
+        li
+            a(href="#inbox" data-toggle="tab") Inbox
+        li
+            a(href="#sent" data-toggle="tab") Sent
+        li
+            a(href="#settings" data-toggle="tab") Settings
+
+
+    .tab-content
+        div(class="tab-pane active" id="inbox")
+            br
+            - if (messages.length)
+                - each message in messages
+                    .panel.panel-default
+                           .panel-heading
+                            h5= 'Subject: ' + message.title    +'    '
+                             a(href='/messages/reply/'+message._id, title=message.title, class="pull-right") Reply
+                           .panel-body
+                                p=message.body + ' '
+                                span= formatDatetime(message.createdAt)
+                                p=message.userfrom.name
+
+        div(class="tab-pane" id="sent")
+            br
+            - if (sentMessages.length)
+                - each msg in sentMessages
+                    .panel.panel-default
+                        .panel-heading
+                            h5= 'Subject: ' + msg.title    +'    '
+                             a(href='/messages/reply/'+msg._id, title=msg.title, class="pull-right") Reply
+                        .panel-body
+                            p=msg.body + ' '
+                            span= formatDatetime(msg.createdAt)
+                                p=msg.userfrom.name
+        div(class="tab-pane" id="messages")
+        div(class="tab-pane" id="settings")
+
+        script(type='text/javascript').
+         $(function () {
+             $('#mytab a:first').tab('show')
+         })

@@ -1,0 +1,6 @@
+form.form-horizontal(method="post", action='/articles', enctype='application/x-www-form-urlencoded', role='form')
+    .form-group   
+        input(type="hidden", name="_csrf", value="#{csrf_token}")
+        textarea#desc.input-xlarge(type='text', rows="3",class='form-control', name="body", placeholder='Enter your message to wall')
+        input#file(type='file',style='display: none', name="image[]")
+        button.btn.btn-default.pull-right(type='submit', style='margin-top: 4px;') Post

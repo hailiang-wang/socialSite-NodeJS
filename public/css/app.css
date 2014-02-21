@@ -1,0 +1,45 @@
+body {
+  padding-top: 5px;
+}
+
+.container {
+  width: auto;
+  max-width: 680px;
+  margin-left: 15px;
+}
+
+.article, .comment {
+  padding: 15px 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+
+.error {
+  color: #FF2602;
+}
+
+.form-actions {
+  background: #fff;
+  border: 0;
+}
+
+.post-textarea{
+	width:100%;
+	
+}
+
+a.post-link{
+	text-decoration: none;
+	color: inherit;
+}
+ul.vertical-line li:before{
+    content:"";
+    width: 5px;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    color: #e6e6e6;
+    position: absolute;
+    left: 220px;
+    top: -22px;
+    height: 900px;
+}

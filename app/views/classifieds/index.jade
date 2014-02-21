@@ -1,0 +1,29 @@
+extends ../layouts/default
+
+block main
+  h1= title
+  a(href="/classifieds/new", type="button", class="btn btn-success") New Classified
+
+
+block content 
+  br
+  - if (classifieds.length)
+   
+      - each classified in classifieds 
+       .panel.panel-success   
+          
+            .panel-heading
+                a(href='/classifieds/'+classified._id, title=classified.title)=classified.title
+            .panel-body
+                
+                    p=classified.body 
+                        span= formatDatetime(classified.createdAt)
+          
+    - if (pages > 1)
+      .pagination
+        ul
+          != createPagination(pages, page)
+          
+  - else
+    p.muted No classifieds.&nbsp;
+      a(href="/classifieds/new") create one

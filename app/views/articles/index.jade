@@ -1,0 +1,42 @@
+extends ../layouts/default
+
+block main
+  h1= title
+  include ../post/post
+  //input(type='text', placeholder='Tags', class='tm-input', name='tags')
+block content
+  - if (articles.length)
+    - each article in articles
+      .panel.panel-default 
+       .panel-heading
+        h5
+          span(class='glyphicon glyphicon-user')
+          a(href='/users/'+article.user._id, title=article.user.name, class='initialism') #{article.user.name}
+       .panel-body
+        p
+            a(href='/articles/'+article._id, title=article.title, class='post-link') #{article.body}
+
+        .meta.muted
+          span= formatDatetime(article.createdAt)
+         // &nbsp; by &nbsp;
+          //- var name = article.user.name ? article.user.name : article.user.username
+
+            //a(href="/users/"+article.user._id)= name
+          - if (article.comments.length>0)
+            &nbsp; - &nbsp 
+            a(href='/articles/'+article._id, title=article.title) #{article.comments.length}&nbsp;Comments
+          - if (article.tags.length>0)
+            &nbsp; - &nbsp;
+          - if (article.tags)
+            - each tag in article.tags.split(',')
+              &nbsp;
+              a.tag(href="/tags/"+tag)
+                i.icon-tags
+                |  #{tag}
+
+    - if (pages > 1)
+        ul(class="pagination")
+          != createPagination(pages, page)
+  - else
+    p.muted No articles.&nbsp;
+      a(href="/articles/new") create one

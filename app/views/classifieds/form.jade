@@ -1,0 +1,47 @@
+extends ../layouts/default
+
+
+block main
+  h1= title
+  hr
+
+block content
+  - var action = '/classifieds'
+  - action += classified.isNew? '' : '/' + classified.id
+
+  .row
+    .span7
+      form.form-horizontal(method="post", action=action, enctype="multipart/form-data")
+
+        input(type="hidden", name="_csrf", value="#{csrf_token}")
+
+        - if (!classified.isNew)
+          input(type="hidden", name="_method", value="PUT")
+
+        .input-group
+          label(for='title') Title
+            input#title.input-xlarge(type='text',class='form-control', name="title", value=classified.title, placeholder='Enter the title')
+
+        .input-group
+          label(for='file') Image
+            input#file(type='file',class='form-control', name="image1[]")
+
+        .input-group
+          label(for='desc') Body
+            textarea#desc.input-xlarge(type='text',class='form-control', rows="5", name="body", placeholder='Enter the classified description')=classified.body
+
+        .input-group
+          label(for='tags') Tags
+            //input#tags(type='text',class='form-control', name="tags", value=classified.tags, placeholder='Enter the tags')
+
+        .form-actions
+          button.btn.btn-primary(type='submit') Save changes
+          &nbsp;
+          a.btn(href='/classifieds', title="cancel") Cancel
+
+    .span5
+      - if (!classified.isNew && classified.image && classified.image.files && classified.image.files.length)
+        img(src=classified.image.cdnUri + "/mini_" + classified.image.files[0])
+
+
+

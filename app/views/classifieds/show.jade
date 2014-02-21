@@ -1,0 +1,31 @@
+extends ../layouts/default
+
+block main
+  h1= classified.title
+    
+block content
+  .row
+    .span9
+      p=classified.body
+      .meta.muted
+        - if (classified.user)
+          - var name = classified.user.name ? classified.user.name : classified.user.username
+          p Author -&nbsp;
+            a(href="/users/"+classified.user._id)= name
+        p.muted= formatDate(classified.createdAt, "%b %d, %Y at %I:%M %p")
+        a(href='/messages/classified/'+classified._id, class="btn btn-success") Contact
+       
+    .span3
+      - if (!classified.isNew && classified.image)
+          img(src=classified.image.cdnUri)// + '/mini_' + classified.image.files[0])
+
+  p
+    br
+    form.center.form-inline.bootbox.confirm(action="/classifieds/"+classified.id, method="post")
+      input(type='hidden', name='_csrf', value="#{csrf_token}")
+      a.btn(href='/classifieds/'+classified._id+'/edit', title="edit", class="btn btn-danger") Edit
+      &nbsp;&nbsp;
+      input(type="hidden", name="_method", value="DELETE")
+      button.btn.btn-danger(type="submit") delete
+
+ 

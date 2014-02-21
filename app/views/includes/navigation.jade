@@ -1,0 +1,15 @@
+ul(class="nav navbar nav-pills nav-stacked vertical-line", style="max-width: 220px;")
+    -var obj = { '':'Wall', 'users/':'People', 'events':'Events' , 'classifieds':'Classifieds', 'announcements':'Announcements', 'messages':'Messages'}
+    -each val, key in obj
+        -if (navid == key)
+            li(class="active default")
+                a(href='/#{key}') #{val}
+        -else
+            li
+                a(href='/#{key}') #{val}
+
+
+
+
+
+p
